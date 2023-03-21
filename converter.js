@@ -1,15 +1,29 @@
 function convertToPython() {
     // Obtenha o código em C do input
     const cCode = document.getElementById("c-code").value;
-  
+    
+    // Verifique se o código está vazio
+    if (cCode.trim() === "") {
+        alert("O código não pode estar vazio.");
+        return;
+    }
+    
+    // Tente analisar o código usando uma biblioteca de análise léxica e sintática
+    try {
+        parse(cCode);
+    } catch (e) {
+        alert("O código C é inválido: " + e.message);
+        return;
+    }
+
     // Faça a conversão do código em C para Python
     const pythonCode = cToPython(cCode);
   
     // Exiba o código em Python no input
     document.getElementById("python-code").value = pythonCode;
-  }
+}
   
-  function cToPython(cCode) {
+function cToPython(cCode) {
     // Substitua as palavras-chave em C pelas equivalentes em Python
     const pythonCode = cCode
       .replace(/int/g, "int")
@@ -39,5 +53,4 @@ function convertToPython() {
     }
   
     return lines.join("\n");
-  }
-  
+}
